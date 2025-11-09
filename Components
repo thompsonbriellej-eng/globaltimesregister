@@ -1,0 +1,4 @@
+components/
+   NavBar.tsx
+   Footer.tsx
+   ArticleCard.tsx
