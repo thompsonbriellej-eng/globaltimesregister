@@ -1,4 +1,5 @@
-./components/ArticleCard
+import ArticleCard from "./components/ArticleCard";
+
 
 
 export default function HomePage() {
