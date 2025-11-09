@@ -1,4 +1,5 @@
-import ArticleCard from "../components/ArticleCard";
+./components/ArticleCard
+
 
 export default function HomePage() {
   return (
