@@ -1,7 +1,5 @@
 import ArticleCard from "./components/ArticleCard";
 
-
-
 export default function HomePage() {
   return (
     <div className="space-y-10">
@@ -34,3 +32,4 @@ export default function HomePage() {
     </div>
   );
 }
+
