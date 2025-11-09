@@ -1,0 +1,189 @@
+# Project Structure for The Global Times Register (Next.js)
+
+```
+gtr-news/
+├── app/
+│   ├── layout.jsx
+│   ├── page.jsx
+│   ├── globals.css
+│   ├── (site)/
+│   │   ├── world/page.jsx
+│   │   ├── climate/page.jsx
+│   │   ├── economy/page.jsx
+│   │   ├── tech/page.jsx
+│   │   ├── opinion/page.jsx
+│   │   └── article/[slug]/page.jsx
+│   └── api/
+│       └── revalidate/route.js
+├── components/
+│   ├── Header.jsx
+│   ├── Footer.jsx
+│   ├── ArticleCard.jsx
+│   ├── SectionTitle.jsx
+│   └── ui/ (shadcn components auto-generated)
+├── lib/
+│   ├── sanity.client.js
+│   ├── queries.js
+│   └── utils.js
+├── sanity/
+│   ├── schema.js
+│   ├── article.js
+│   ├── category.js
+│   ├── author.js
+│   └── settings.js
+├── public/
+│   ├── logo.svg
+│   └── placeholder.jpg
+├── package.json
+├── tailwind.config.js
+├── postcss.config.js
+├── next.config.js
+└── README.md
+```
+
+## app/layout.jsx
+```jsx
+export const metadata = {
+  title: "The Global Times Register",
+  description: "Where the world keeps its record.",
+};
+
+import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className="bg-white text-black font-serif">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
+```
+
+## app/page.jsx (Homepage)
+```jsx
+// Already in the other canvas — copy it here when ready
+```
+
+## components/Header.jsx
+```jsx
+export default function Header() {
+  return (
+    <header className="border-b p-6 flex justify-between items-center">
+      <h1 className="text-3xl font-bold tracking-tight">The Global Times Register</h1>
+      <nav className="space-x-6 text-lg font-sans">
+        <a href="/world" className="hover:underline">World</a>
+        <a href="/climate" className="hover:underline">Climate</a>
+        <a href="/economy" className="hover:underline">Economy</a>
+        <a href="/tech" className="hover:underline">Tech</a>
+        <a href="/opinion" className="hover:underline">Opinion</a>
+      </nav>
+    </header>
+  );
+}
+```
+
+## components/Footer.jsx
+```jsx
+export default function Footer() {
+  return (
+    <footer className="border-t p-6 mt-10 text-center text-sm text-gray-600">
+      © {new Date().getFullYear()} The Global Times Register. All rights reserved.
+    </footer>
+  );
+}
+```
+
+## sanity/schema.js
+```js
+import article from "./article";
+import author from "./author";
+import category from "./category";
+import settings from "./settings";
+
+export const schema = {
+  types: [article, author, category, settings],
+};
+```
+
+## sanity/article.js
+```js
+export default {
+  name: "article",
+  title: "Article",
+  type: "document",
+  fields: [
+    { name: "title", type: "string" },
+    { name: "slug", type: "slug", options: { source: "title" } },
+    { name: "excerpt", type: "text" },
+    { name: "content", type: "array", of: [{ type: "block" }] },
+    { name: "category", type: "reference", to: [{ type: "category" }] },
+    { name: "author", type: "reference", to: [{ type: "author" }] },
+    { name: "date", type: "datetime" },
+  ],
+};
+```
+
+## sanity/category.js
+```js
+export default {
+  name: "category",
+  title: "Category",
+  type: "document",
+  fields: [
+    { name: "title", type: "string" },
+    { name: "slug", type: "slug", options: { source: "title" } },
+  ],
+};
+```
+
+## sanity/author.js
+```js
+export default {
+  name: "author",
+  title: "Author",
+  type: "document",
+  fields: [
+    { name: "name", type: "string" },
+    { name: "image", type: "image" },
+    { name: "bio", type: "text" },
+  ],
+};
+```
+
+## sanity/settings.js
+```js
+export default {
+  name: "settings",
+  title: "Site Settings",
+  type: "document",
+  fields: [
+    { name: "siteTitle", type: "string" },
+    { name: "tagline", type: "string" },
+    { name: "logo", type: "image" },
+  ],
+};
+```
+
+## README.md
+```md
+# The Global Times Register
+A global-scale news organization built with Next.js, Sanity CMS, and modern UI tooling.
+
+## Features
+- NYT-style authoritative design
+- Dynamic article pages
+- CMS-driven content
+- Tailwind + shadcn/ui
+- Framer Motion animations
+
+## Setup
+1. Clone this repo
+2. Run `npm install`
+3. Run `npm run dev`
+4. Configure Sanity with `npx sanity init`
